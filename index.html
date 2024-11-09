@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Waste Prediction</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Predict Food Waste Category</h1>
+        <form action="/predict" method="POST">
+            <!-- Example input fields for each feature -->
+            <label for="feature1">Feature 1:</label>
+            <input type="number" step="any" name="feature1" required><br>
+            <label for="feature2">Feature 2:</label>
+            <input type="number" step="any" name="feature2" required><br>
+            <!-- Add more fields as required by the model -->
+            
+            <button type="submit">Predict</button>
+        </form>
+        {% if prediction_text %}
+            <p>{{ prediction_text }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
