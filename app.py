@@ -12,14 +12,14 @@ from google.auth import exceptions
 # Flask setup
 app = Flask(__name__)
 
-# Google Drive API setup
+# Google Drive API setup (if you want to download files from Google Drive)
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']  # Set the scope to read files
 CLIENT_SECRETS_FILE = 'client_secrets.json'  # Path to your client_secrets.json file
 
 # Global variables
 credentials = None
 MODEL_FILE_ID = 'your_model_file_id'  # Replace with your model file ID on Google Drive
-model_path = 'best_rf_model.pkl'  # Local path to save the model
+model_path = 'best_rf_model.pkl'  # Local path to save the model (update this)
 
 # Check if credentials are already saved, if not, authenticate
 def get_credentials():
