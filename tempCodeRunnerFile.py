@@ -32,15 +32,6 @@ form_html = """
         <label for="feature4">Feature 4:</label>
         <input type="number" step="any" name="feature4" required><br><br>
 
-        <label for="feature5">Feature 5:</label>
-        <input type="number" step="any" name="feature5" required><br><br>
-
-        <label for="feature6">Feature 6:</label>
-        <input type="number" step="any" name="feature6" required><br><br>
-
-        <label for="feature7">Feature 7:</label>
-        <input type="number" step="any" name="feature7" required><br><br>
-
         <input type="submit" value="Predict">
     </form>
 
@@ -63,15 +54,12 @@ def predict():
         feature2 = float(request.form['feature2'])
         feature3 = float(request.form['feature3'])
         feature4 = float(request.form['feature4'])
-        feature5 = float(request.form['feature5'])
-        feature6 = float(request.form['feature6'])
-        feature7 = float(request.form['feature7'])
 
         # Print the received input values for debugging
-        print(f"Received input: {feature1}, {feature2}, {feature3}, {feature4}, {feature5}, {feature6}, {feature7}")
+        print(f"Received input: {feature1}, {feature2}, {feature3}, {feature4}")
 
         # Combine the features into an array for the model
-        features = np.array([feature1, feature2, feature3, feature4, feature5, feature6, feature7]).reshape(1, -1)
+        features = np.array([feature1, feature2, feature3, feature4]).reshape(1, -1)
 
         # Scale the features using the loaded scaler
         features_scaled = scaler.transform(features)
