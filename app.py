@@ -20,30 +20,22 @@ form_html = """
 <body>
     <h2>Enter Feature Values for Prediction</h2>
     <form method="POST" action="/predict">
-        <label for="feature1">Feature 1:</label>
-        <input type="number" step="any" name="feature1" required><br><br>
-
-        <label for="feature2">Feature 2:</label>
-        <input type="number" step="any" name="feature2" required><br><br>
-
-        <label for="feature3">Feature 3:</label>
-        <input type="number" step="any" name="feature3" required><br><br>
-
-        <label for="feature4">Feature 4:</label>
-        <input type="number" step="any" name="feature4" required><br><br>
-
-        <label for="feature5">Feature 5:</label>
-        <input type="number" step="any" name="feature5" required><br><br>
-
-        <label for="feature6">Feature 6:</label>
-        <input type="number" step="any" name="feature6" required><br><br>
-
-        <label for="feature7">Feature 7:</label>
-        <input type="number" step="any" name="feature7" required><br><br>
-
+        <label for="combined_figures">Combined Figures (kg/capita/year):</label>
+        <input type="number" step="any" name="combined_figures" required><br><br>
+        <label for="household_estimate_kg">Household Estimate (kg/capita/year):</label>
+        <input type="number" step="any" name="household_estimate_kg" required><br><br>
+        <label for="household_estimate_tonnes">Household Estimate (tonnes/year):</label>
+        <input type="number" step="any" name="household_estimate_tonnes" required><br><br>
+        <label for="retail_estimate_kg">Retail Estimate (kg/capita/year):</label>
+        <input type="number" step="any" name="retail_estimate_kg" required><br><br>
+        <label for="retail_estimate_tonnes">Retail Estimate (tonnes/year):</label>
+        <input type="number" step="any" name="retail_estimate_tonnes" required><br><br>
+        <label for="food_service_estimate_kg">Food Service Estimate (kg/capita/year):</label>
+        <input type="number" step="any" name="food_service_estimate_kg" required><br><br>
+        <label for="food_service_estimate_tonnes">Food Service Estimate (tonnes/year):</label>
+        <input type="number" step="any" name="food_service_estimate_tonnes" required><br><br>
         <input type="submit" value="Predict">
     </form>
-
     {% if prediction_text %}
         <h3>{{ prediction_text }}</h3>
     {% endif %}
@@ -59,19 +51,19 @@ def index():
 def predict():
     try:
         # Get input features from the form
-        feature1 = float(request.form['feature1'])
-        feature2 = float(request.form['feature2'])
-        feature3 = float(request.form['feature3'])
-        feature4 = float(request.form['feature4'])
-        feature5 = float(request.form['feature5'])
-        feature6 = float(request.form['feature6'])
-        feature7 = float(request.form['feature7'])
+        combined_figures = float(request.form['combined_figures'])
+        household_estimate_kg = float(request.form['household_estimate_kg'])
+        household_estimate_tonnes = float(request.form['household_estimate_tonnes'])
+        retail_estimate_kg = float(request.form['retail_estimate_kg'])
+        retail_estimate_tonnes = float(request.form['retail_estimate_tonnes'])
+        food_service_estimate_kg = float(request.form['food_service_estimate_kg'])
+        food_service_estimate_tonnes = float(request.form['food_service_estimate_tonnes'])
 
         # Print the received input values for debugging
-        print(f"Received input: {feature1}, {feature2}, {feature3}, {feature4}, {feature5}, {feature6}, {feature7}")
+        print(f"Received input: {combined_figures}, {household_estimate_kg}, {household_estimate_tonnes}, {retail_estimate_kg}, {retail_estimate_tonnes}, {food_service_estimate_kg}, {food_service_estimate_tonnes}")
 
         # Combine the features into an array for the model
-        features = np.array([feature1, feature2, feature3, feature4, feature5, feature6, feature7]).reshape(1, -1)
+        features = np.array([combined_figures, household_estimate_kg, household_estimate_tonnes, retail_estimate_kg, retail_estimate_tonnes, food_service_estimate_kg, food_service_estimate_tonnes]).reshape(1, -1)
 
         # Scale the features using the loaded scaler
         features_scaled = scaler.transform(features)
@@ -84,9 +76,7 @@ def predict():
 
         # Translate prediction to readable result
         result = "High" if prediction == 1 else "Low"
-
         return render_template_string(form_html, prediction_text=f"Predicted Food Waste Category: {result}")
-
     except Exception as e:
         # Print the detailed error message for debugging
         print(f"Error: {str(e)}")
